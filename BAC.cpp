@@ -5,22 +5,28 @@ int main()
   int* ap = new int[10];
   for (int i = 0; i < 10; i++)
     ap[i] = 0;
-  int* p10 = new int[10];
-  for (int i = 0, p = 1; i < 10; p *= 10, i++)
-    p10[i] = p;
   ifstream f("BAC.in");
   int x;
   while (f >> x)
   {
-    for (int i = 0; i < 10; i++)
-      if (x == p10[i])
-        ap[i]++;
+    int p = 0;
+    while (x > 9)
+    {
+      x /= 10;
+      p++;
+    }
+    ap[p]++;
   }
   f.close();
   ofstream g("BAC.out");
   for (int i = 0; i < 10; i++)
-    for (int j = 0; j < ap[i]; j++)
-      g << p10[i] << ' ';
+    if (ap[i])
+    {
+      int p = 1;
+      for (int j = 0; j < i; j++, p *= 10);
+      for (int j = 0; j < ap[i]; j++)
+        g << p << ' ';
+    }
   g.close();
   return 0;
 }
